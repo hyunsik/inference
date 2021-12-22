@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/bash -x
 
 source ./run_common.sh
 

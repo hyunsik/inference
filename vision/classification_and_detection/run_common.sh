@@ -18,7 +18,7 @@ device="cpu"
 
 for i in $* ; do
     case $i in
-       tf|onnxruntime|tflite|pytorch) backend=$i; shift;;
+       tf|onnxruntime|tflite|pytorch|furiosa) backend=$i; shift;;
        cpu|gpu) device=$i; shift;;
        gpu) device=gpu; shift;;
        resnet50|mobilenet|ssd-mobilenet|ssd-resnet34|ssd-resnet34-tf) model=$i; shift;;
@@ -109,6 +109,20 @@ if [ $name == "mobilenet-tflite" ] ; then
     model_path="$MODEL_DIR/mobilenet_v1_1.0_224.tflite"
     profile=mobilenet-tf
     extra_args="$extra_args --backend tflite"
+fi
+
+#
+# furiosa
+#
+if [ $name == "resnet50-furiosa" ] ; then
+    model_path="$MODEL_DIR/resnet50_int8.onnx"
+    profile=resnet50-furiosa
+    extra_args="$extra_args --backend furiosa"
+fi
+if [ $name == "ssd-mobilenet-furiosa" ] ; then
+    model_path="$MODEL_DIR/ssd_mobilenet_int8.onnx"
+    profile=ssd-mobilenet-furiosa
+    extra_args="$extra_args --backend furiosa"
 fi
 
 name="$backend-$device/$model"

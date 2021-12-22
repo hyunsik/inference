@@ -133,6 +133,14 @@ SUPPORTED_PROFILES = {
         "data-format": "NHWC",
         "model-name": "ssd-mobilenet",
     },
+    "ssd-mobilenet-furiosa": {
+        "dataset": "coco-300",
+        "inputs": "",
+        "outputs": "num_detections:0,detection_boxes:0,detection_scores:0,detection_classes:0",
+        "backend": "furiosa",
+        "data-format": "NCHW",
+        "model-name": "ssd-mobilenet",
+    },
 
     # ssd-resnet34
     "ssd-resnet34-tf": {
@@ -255,6 +263,9 @@ def get_backend(backend):
     elif backend == "tflite":
         from backend_tflite import BackendTflite
         backend = BackendTflite()
+    elif backend == "furiosa":
+        from backend_furiosa import BackendFuriosa
+        backend = BackendFuriosa()
     else:
         raise ValueError("unknown backend: " + backend)
     return backend
